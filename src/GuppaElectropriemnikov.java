@@ -2,13 +2,13 @@ import java.util.Objects;
 
 public class GuppaElectropriemnikov extends ArraysForStart {
 
-    int n_pozicii_v_tablice; //номер позиции в таблице(перечне электрооборудования) для каждого наименования
-    String name; //Наименование электроприемника
-    double Pnom; //Мощность одного электроприемника Рн кВт
-    int n; // Количество электроприемников n, шт
-    double Ki; //Коэффициент использования Ки
-    double cosf; //Коэффициент мощности cosφ
-    double tgf; //Коэффициент мощности tgφ
+    private int n_pozicii_v_tablice; //номер позиции в таблице(перечне электрооборудования) для каждого наименования
+    private String name; //Наименование электроприемника
+    private double Pnom; //Мощность одного электроприемника Рн кВт
+    private int n; // Количество электроприемников n, шт
+    private double Ki; //Коэффициент использования Ки
+    private double cosf; //Коэффициент мощности cosφ
+    private double tgf; //Коэффициент мощности tgφ
 
 
     GuppaElectropriemnikov(int n_pozicii_v_tablice, String name, double Pnom,
@@ -27,24 +27,24 @@ public class GuppaElectropriemnikov extends ArraysForStart {
         koefficient_Ispolzovaniya.put(name, Ki);
         cos_f_Kazhdogo.put(name, cosf);
         tg_f_Kazhdogo.put(name, cosf);
-        P_Vseh_Priemnikov.put(name, PnomOnegr());
-        P_sm_Vseh_Priemnikov.put(name, PsmOnegr());
-        Q_sm_Vseh_Priemnikov.put(name, QsmOnegr());
+//        P_Vseh_Priemnikov.put(name, PnomOnegr()); // возможно вообще не пригодится т.к. нигде не используется
+//        P_sm_Vseh_Priemnikov.put(name, PsmOnegr()); // возможно вообще не пригодится т.к. нигде не используется
+//        Q_sm_Vseh_Priemnikov.put(name, QsmOnegr()); // возможно вообще не пригодится т.к. нигде не используется
 
     }
-
-    public double PnomOnegr() { // Номинальная мощность группы электроприемников P_(ном гр)   кВт
-
-        return P_Kazdogo_Priemnika.get(name) * n_kolichestvo_v_gruppe.get(name);
-    }
-
-    public double PsmOnegr() { // Среднесменная активная мощность группы электроприемников P_(см ),кВт
-        return P_Vseh_Priemnikov.get(name) * koefficient_Ispolzovaniya.get(name);
-    }
-
-    public double QsmOnegr() { // Среднесменная реактивная мощность группы электроприемников Q_см,кВАр
-        return P_sm_Vseh_Priemnikov.get(name) * tgf;
-    }
+// возможно вообще не пригодится т.к. нигде не используется
+//    public double PnomOnegr() { // Номинальная мощность группы электроприемников P_(ном гр)   кВт
+//
+//        return P_Kazdogo_Priemnika.get(name) * n_kolichestvo_v_gruppe.get(name);
+//    }
+//
+//    public double PsmOnegr() { // Среднесменная активная мощность группы электроприемников P_(см ),кВт
+//        return P_Vseh_Priemnikov.get(name) * koefficient_Ispolzovaniya.get(name);
+//    }
+//
+//    public double QsmOnegr() { // Среднесменная реактивная мощность группы электроприемников Q_см,кВАр
+//        return P_sm_Vseh_Priemnikov.get(name) * tgf;
+//    }
 
     @Override
     public boolean equals(Object o) {

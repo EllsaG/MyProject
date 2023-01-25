@@ -1,54 +1,89 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class PRorSHR extends ArraysForStart {
 
-    HashMap<Integer, Integer> Nomera_Grup_V_PRorSHR;// (номер, количесво) каждой группы электроприемников входищих в каждый ПР/ШР
+
+    private String nazvanie_PRorSHR; // название ПР или ШР (ПР-1, ШРА-1, ШМА-1 и т.д.)
+    private int[] nomera_oborudovaniya;// номер каждой группы электроприемников входищих в каждый ПР/ШР
+    private int[] kolichesvo_stankov;// количесво каждой группы электроприемников входищих в каждый ПР/ШР
 
 
-    PRorSHR(HashMap<Integer, Integer> Nomera_Grup_V_PRorSHR) { //1, 2, 3
-        this.Nomera_Grup_V_PRorSHR = Nomera_Grup_V_PRorSHR;
+    PRorSHR(String nazvanie_PRorSHR, int[] nomera_oborudovaniya, int[] kolichesvo_stankov) {
+        this.nazvanie_PRorSHR = nazvanie_PRorSHR;
+        this.nomera_oborudovaniya = nomera_oborudovaniya;
+        this.kolichesvo_stankov = kolichesvo_stankov;
 
 
-        P_nom_All_gr[nVsegoPR_SHR] = PnomAllgr();
-        P_sm_All_gr[nVsegoPR_SHR] = PsmAllgr();
-        Q_sm_All_gr[nVsegoPR_SHR] = QsmAllgr();
+        P_nom_All_gr.put(nazvanie_PRorSHR, PnomAllgr());
+        P_sm_All_gr.put(nazvanie_PRorSHR, PsmAllgr());
+        Q_sm_All_gr.put(nazvanie_PRorSHR, QsmAllgr());
 
 
-        nVsegoPR_SHR++;
+        //  1, 4 ,8
+        //  7, 12, 4
 
     }
 
     public double PnomAllgr() { //Номинальная мощность всех групп электроприемников входящих в группу ШР или ПР P_(ном гр)   кВт
         double sum = 0.0;
-        for (int i = 0; i < Nomera_Grup_V_PRorSHR.size(); i++) {
-            sum += P_Vseh_Priemnikov[i];
+
+        for (int i = 0, j = nomera_oborudovaniya[i]; i < nomera_oborudovaniya.length; i++) {
+            sum += P_Kazdogo_Priemnika.get(nazvanie_kazhdogo_priemnika.get(j)) * kolichesvo_stankov[i];/*
+        сумма += получаю мощность приемника ( получаю String наименование оборудования из
+        переменной "j"( согласно номерам в массиве "nomera_oborudovaniya")) и умножаю на количество этих станков в
+        массиве "kolichesvo_stankov"
+        */
         }
-        return sum;
+        return Math.round(sum * 100.0) / 100.0; // округление до 2-х знаков после запятой
     }
 
     public double PsmAllgr() { //Среднесменная активная всех групп электроприемников входящих в группу ШР или ПР P_(ном гр)   кВт
         double sum = 0.0;
-        for (int i = 0; i < Nomera_Grup_V_PRorSHR.length; i++) {
-            sum += P_sm_Vseh_Priemnikov[i];
+        for (int i = 0, j = nomera_oborudovaniya[i]; i < nomera_oborudovaniya.length; i++) {
+            sum += P_Kazdogo_Priemnika.get(nazvanie_kazhdogo_priemnika.get(j)) *
+                    koefficient_Ispolzovaniya.get(nazvanie_kazhdogo_priemnika.get(j));
+            /*
+        сумма += получаю мощность приемника ( получаю String наименование оборудования из
+        переменной "j"( согласно номерам в массиве "nomera_oborudovaniya")) и умножаю на коэффициент использования
+        этих станков ( получаю String наименование оборудования изпеременной "j"
+        ( согласно номерам в массиве "nomera_oborudovaniya"))
+        */
         }
-        return sum;
+        return Math.round(sum * 100.0) / 100.0; // округление до 2-х знаков после запятой
     }
 
     public double QsmAllgr() { //Среднесменная реактивная всех групп электроприемников входящих в группу ШР или ПР P_(ном гр)   кВАр
         double sum = 0.0;
-        for (int i = 0; i < Nomera_Grup_V_PRorSHR.length; i++) {
-            sum += Q_sm_Vseh_Priemnikov[i];
+        for (int i = 0, j = nomera_oborudovaniya[i]; i < nomera_oborudovaniya.length; i++) {
+            sum += P_sm_All_gr.get(nazvanie_kazhdogo_priemnika.get(j)) *
+                    tg_f_Kazhdogo.get(nazvanie_kazhdogo_priemnika.get(j));
+            /*
+        сумма += получаю среднесменную мощность приемника ( получаю String наименование оборудования из
+        переменной "j"( согласно номерам в массиве "nomera_oborudovaniya")) и умножаю на коэффициент мощности tgφ
+        этих станков ( получаю String наименование оборудования изпеременной "j"
+        ( согласно номерам в массиве "nomera_oborudovaniya"))
+        */
         }
-        return Math.round(sum * 100.0) / 100.0; // округление до 2-х знаков после запятой   ;
+        return Math.round(sum * 100.0) / 100.0; // округление до 2-х знаков после запятой
     }
 
     public double m() { // Модуль (показатель) силовой сборки m
-        double[] array = P_Kazdogo_Priemnika;
-        Arrays.sort(array);
-        return array[array.length - 1] / array[0];
+
+        ArrayList <Double> arrayList = new ArrayList<>();
+
+        for (int i = 0, j = nomera_oborudovaniya[i]; i < nomera_oborudovaniya.length; i++) {
+            arrayList.add(P_Kazdogo_Priemnika.get(nazvanie_kazhdogo_priemnika.get(j))); /*
+        получаю мощность приемника ( получаю String наименование оборудования из
+        переменной "j"( согласно номерам в массиве "nomera_oborudovaniya")) и добавляю в массив
+        для дальнейшей сортировки
+        */
+        }
+        Collections.sort(arrayList);
+
+        return Math.round((arrayList.get(arrayList.size()-1)/arrayList.get(0)) * 10.0) / 10.0;  /*
+         округление до 1-го знака после запятой
+         самый мощный / самый маломощный станок в составе шинопровода
+         */
     }
 
     public double Ki() { // Коэффициент использования ПР или ШР K_(и ПР1),кВАр

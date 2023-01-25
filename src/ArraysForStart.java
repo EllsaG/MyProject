@@ -11,16 +11,15 @@ public class ArraysForStart {
     public static HashMap<String, Double> koefficient_Ispolzovaniya = new HashMap<>(); // коэффициент использования каждой группы, ключ - наименование оборудования
     public static HashMap<String, Double> cos_f_Kazhdogo = new HashMap<>(); //Коэффициент мощности cosφ каждого отдельно взятого приемника, ключ - наименование оборудования
     public static HashMap<String, Double> tg_f_Kazhdogo = new HashMap<>(); //Коэффициент мощности tgφ каждого отдельно взятого приемника, ключ - наименование оборудования
-    public static HashMap<String, Double> P_Vseh_Priemnikov= new HashMap<>(); // номинальная мощность групп приемников, ключ - наименование оборудования
-    public static HashMap<String, Double> P_sm_Vseh_Priemnikov= new HashMap<>(); // номинальная мощность групп приемников, ключ - наименование оборудования
-    public static HashMap<String, Double> Q_sm_Vseh_Priemnikov= new HashMap<>();// номинальная мощность групп приемников, ключ - наименование оборудования
+    // возможно вообще не пригодится т.к. нигде не используется public static HashMap<String, Double> P_Vseh_Priemnikov= new HashMap<>(); // номинальная мощность групп приемников, ключ - наименование оборудования
+    // возможно вообще не пригодится т.к. нигде не используется public static HashMap<String, Double> P_sm_Vseh_Priemnikov= new HashMap<>(); // номинальная мощность групп приемников, ключ - наименование оборудования
+    // возможно вообще не пригодится т.к. нигде не используется public static HashMap<String, Double> Q_sm_Vseh_Priemnikov= new HashMap<>();// номинальная мощность групп приемников, ключ - наименование оборудования
 
 
 
-    public static HashMap<String, Integer>   //количество каждого вида приемника на 1 ПР/ШР
-    public static double[] P_nom_All_gr = new double[4]; // Номинальная мощность всех ПР и ШР в порядке создания объектов
-    public static double[] P_sm_All_gr = new double[4]; // Номинальная мощность всех ПР и ШР в порядке создания объектов
-    public static double[] Q_sm_All_gr = new double[4]; // Номинальная мощность всех ПР и ШР в порядке создания объектов
+    public static HashMap<String, Double>  P_nom_All_gr = new HashMap<>(); // Номинальная мощность всех ПР и ШР, ключ - наименование оборудования
+    public static HashMap<String, Double>  P_sm_All_gr = new HashMap<>(); // Номинальная мощность всех ПР и ШР, ключ - наименование оборудования
+    public static HashMap<String, Double>  Q_sm_All_gr = new HashMap<>(); // Номинальная мощность всех ПР и ШР, ключ - наименование оборудования
     public static double[] K_i_PR_or_SHR = new double[5]; // Коэффициент максимума K_макс задается в методе класса (PRorSHR) для кажого ПР или ШР
 
 
