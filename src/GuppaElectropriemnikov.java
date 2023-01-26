@@ -23,28 +23,27 @@ public class GuppaElectropriemnikov extends ArraysForStart {
 
         nazvanie_kazhdogo_priemnika.put(n_pozicii_v_tablice, name);
         P_Kazdogo_Priemnika.put(name, Pnom);
-        n_kolichestvo_v_gruppe.put(name, n) ;
         koefficient_Ispolzovaniya.put(name, Ki);
+        n_kolichestvo_v_gruppe.put(name, n) ;
         cos_f_Kazhdogo.put(name, cosf);
-        tg_f_Kazhdogo.put(name, cosf);
-//        P_Vseh_Priemnikov.put(name, PnomOnegr()); // возможно вообще не пригодится т.к. нигде не используется
-//        P_sm_Vseh_Priemnikov.put(name, PsmOnegr()); // возможно вообще не пригодится т.к. нигде не используется
-//        Q_sm_Vseh_Priemnikov.put(name, QsmOnegr()); // возможно вообще не пригодится т.к. нигде не используется
+        tg_f_Kazhdogo.put(name, tgf);
+        P_sm_Kazdogo_Priemnikov.put(name, PsmOne());
+        Q_sm_Kazdogo_Priemnikov.put(name, QsmOne());
+
+
 
     }
-// возможно вообще не пригодится т.к. нигде не используется
-//    public double PnomOnegr() { // Номинальная мощность группы электроприемников P_(ном гр)   кВт
-//
-//        return P_Kazdogo_Priemnika.get(name) * n_kolichestvo_v_gruppe.get(name);
-//    }
-//
-//    public double PsmOnegr() { // Среднесменная активная мощность группы электроприемников P_(см ),кВт
-//        return P_Vseh_Priemnikov.get(name) * koefficient_Ispolzovaniya.get(name);
-//    }
-//
-//    public double QsmOnegr() { // Среднесменная реактивная мощность группы электроприемников Q_см,кВАр
-//        return P_sm_Vseh_Priemnikov.get(name) * tgf;
-//    }
+
+
+    public double PsmOne() { // Среднесменная активная мощность группы электроприемников P_(см ),кВт
+        return Math.round(P_Kazdogo_Priemnika.get(name) *
+                koefficient_Ispolzovaniya.get(name) *100.0)/100.0;
+    }
+
+    public double QsmOne() { // Среднесменная реактивная мощность группы электроприемников Q_см,кВАр
+        return Math.round(P_sm_Kazdogo_Priemnikov.get(name) *
+                tg_f_Kazhdogo.get(name)*100.0)/100.0;
+    }
 
     @Override
     public boolean equals(Object o) {
